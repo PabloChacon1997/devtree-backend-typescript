@@ -4,6 +4,7 @@ import slug from 'slug';
 
 import User from "../models/User";
 import { checkPassword, hasPassword } from '../utils/auth';
+import { generateJWT } from '../utils/jwt';
 
 
 export const createAccount = async (req: Request, res: Response) => {
@@ -46,7 +47,18 @@ export const login = async (req: Request, res: Response) => {
     const error = new Error('El password es incorrecto');
     return res.status(404).json({error: error.message});
   }
-  return res.send('Desde login');
+
+  const token = generateJWT({id: user.id});
+  return res.send(token);
+}
+
+export const getUser = async (req: Request, res: Response) => {
+  const bearer = req.headers.authorization;
+  if (!bearer) {
+    const error = new Error('Usuario no autorizado');
+    return res.status(401).json({error: error.message});
+  }
+  return res.send('Desde Find User');
 }
 
 

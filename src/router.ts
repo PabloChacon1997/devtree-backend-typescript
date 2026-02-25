@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAccount, login } from "./handlers";
+import { createAccount, getUser, login } from "./handlers";
 import { body } from "express-validator";
 import { handleInputError } from "./middleware/validation";
 
@@ -19,6 +19,8 @@ router.post('/auth/login',
   body('password').notEmpty().withMessage('El password es obligatorio'),
   handleInputError,
   login);
+
+router.get('/user', getUser);
 
 export default router;
 
