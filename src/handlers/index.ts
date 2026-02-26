@@ -53,12 +53,7 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const getUser = async (req: Request, res: Response) => {
-  const bearer = req.headers.authorization;
-  if (!bearer) {
-    const error = new Error('Usuario no autorizado');
-    return res.status(401).json({error: error.message});
-  }
-  return res.send('Desde Find User');
+  res.send(req.user);
 }
 
 
