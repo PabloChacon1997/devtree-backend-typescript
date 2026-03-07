@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createAccount, getUser, getUserByHandle, login, updateImage, updateProfile } from "./handlers";
+import { createAccount, getUser, getUserByHandle, login, searchByHandle, updateImage, updateProfile } from "./handlers";
 import { body } from "express-validator";
 import { handleInputError } from "./middleware/validation";
 import { authenticate } from "./middleware/auth";
@@ -27,7 +27,6 @@ router.get('/user',
 
 router.patch('/user',
     body('handle').notEmpty().withMessage('El handle no puede ir vacio'),
-    body('description').notEmpty().withMessage('La descripcion no puede ir vacia'),
   handleInputError,
   authenticate,
   updateProfile);
@@ -38,6 +37,11 @@ router.post('/user/image',
 
 router.get('/:handle',
   getUserByHandle);
+
+router.post('/search',
+    body('handle').notEmpty().withMessage('El handle no puede ir vacio'),
+    handleInputError,
+  searchByHandle);
 
 export default router;
 
